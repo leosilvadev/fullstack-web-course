@@ -6,25 +6,7 @@ const server = net.createServer(function(socket) {
 	socket.id = lastId++;
 	socket.lastMessage = new Date();
 
-	socket.write(`Welcome, you are connected with the id: ${socket.id}\r\n`);
-
-	var interval = setInterval(function() {
-		if (socket.lastMessage < tenSecondsBefore()) { 
-			console.log(`Disconnecting client ${socket.id} after 10 second without iteraction...`);
-			socket.end("Sorry, you are disconnected!!!\r\n");
-			clearInterval(interval);
-		}
-	}, 1000);
-
-	socket.on('error', function(err) {
-	   console.log(err);
-	   clearInterval(interval);
-	});
-
-	socket.on("close", function() {
-		console.log("One client just disconnected...");
-		clearInterval(interval);
-	});
+	//TODO: implement a http response, respoding a simple html page with the content "<html><body><h1>Hello!</h1></body></html>""
 
 	socket.on('data', function(data){
 		console.log(`Data received from socket ${socket.id}: ${data}`);
